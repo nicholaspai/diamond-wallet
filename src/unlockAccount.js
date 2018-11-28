@@ -20,8 +20,12 @@ function callback_decrypt(progress) {
 
 // Decrypt walletJSON file with password
 export const unlockWallet = async (encryptedJsonFile, password) => {
-    let data = await fs.readFileSync(path.join(ACCOUNTS_DIR,encryptedJsonFile))
-    return await ethers.Wallet.fromEncryptedJson(data, password, callback_decrypt)
+    try {
+        let data = await fs.readFileSync(path.join(ACCOUNTS_DIR,encryptedJsonFile))
+        return await ethers.Wallet.fromEncryptedJson(data, password, callback_decrypt)
+    } catch(err) {
+        throw err
+    }
 }
 
 // Command-line interface for unlockWallet() 
@@ -40,7 +44,6 @@ export const unlockWallet_cli = async () => {
     // Prompt user to specify a wallet to unlock
     let encryptedJson
     rl.question('Please enter the index of the wallet JSON file to unlock from the above list, (e.g. enter 0, 1, 2, etc.): ', async (walletIndex) => {
-        walletIndex
         if (isNaN(walletIndex) || walletIndex < 0 || walletIndex >= accounts.length) {
             rl.close()
             console.log('invalid wallet index')

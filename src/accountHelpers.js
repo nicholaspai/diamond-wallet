@@ -1,10 +1,16 @@
 import { ethers } from 'ethers';
+import { getWeb3 } from './deployContract'
 const fs = require('fs')
 const path = require('path')
 require('dotenv').config() 
 
+let web3 = getWeb3()
+
 // Directory for storing accounts
 let ACCOUNTS_DIR = process.env.ACCOUNTS_DIR
+
+// ETH network
+let provider = ethers.getDefaultProvider('ropsten');
 
 export function listAllAccounts() {
     let filenames = fs.readdirSync(ACCOUNTS_DIR);
@@ -47,7 +53,6 @@ export async function printAddresses() {
 }
 
 export async function printBalances() {
-    let provider = ethers.getDefaultProvider();
     let addresses = await getAddresses()
     let balances = []
     var i = 0
