@@ -1,6 +1,6 @@
 # This wallet can create accounts on any cryptonetwork
 
-## *SETUP*
+## SETUP
 1. `npm i ` to install dependencies
 
 2. create a `.env` file and specify a directory to store wallet keystore JSON's. For example, my `.env` contains:
